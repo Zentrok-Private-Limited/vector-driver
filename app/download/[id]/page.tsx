@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useParams, useRouter } from "next/navigation";
-import { ChevronRight, Download, ShieldCheck, Lock, Phone,CloudDownload } from "lucide-react";
+import { ChevronRight, Download, ShieldCheck, Lock, Phone, CloudDownload } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -36,7 +36,6 @@ export default function DownloadPage() {
             <div className="flex items-center space-x-5">
               <div className="w-20 h-20 bg-[#F0F4FA] rounded-xl flex items-center justify-center text-[#3A76D2]">
                 <CloudDownload className="w-10 h-10 stroke-2" />
-                <span className="absolute -top-1 -right-1 w-2 h-2 bg-[#3A76D2] rounded-full" />
               </div>
               
               <div className="space-y-1">
@@ -89,7 +88,7 @@ export default function DownloadPage() {
         </div>
 
         <div className="fixed bottom-0 right-12 z-50 w-72">
-          <div className="bg-linear-to-r from-[#4E148C] to-[#2575FC] text-white px-4 py-2.5 rounded-t-xl flex items-center justify-between cursor-pointer shadow-2xl">
+          <div className="bg-gradient-to-r from-[#4E148C] to-[#2575FC] text-white px-4 py-2.5 rounded-t-xl flex items-center justify-between cursor-pointer shadow-2xl">
             <span className="text-[13px] font-medium tracking-wide">We are online</span>
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
           </div>
