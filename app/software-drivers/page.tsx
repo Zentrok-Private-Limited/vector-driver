@@ -38,7 +38,7 @@ export default function SoftwareDriversPage() {
       <Header />
 
       {/* 2. DRIVER PROGRESS STEP TIMELINE */}
-      <section className="max-w-[1200px] mx-auto px-6 pt-10 pb-6">
+      <section className="max-w-300 mx-auto px-6 pt-10 pb-6">
         <div className="flex items-center space-x-4 text-[14px]">
           {/* Step 1 */}
           <div className="flex items-center space-x-2 text-black font-semibold">
@@ -63,7 +63,7 @@ export default function SoftwareDriversPage() {
       </section>
 
       {/* 3. CALL TO ACTION HEADERS */}
-      <section className="max-w-[1200px] mx-auto px-6 pt-4 pb-12">
+      <section className="max-w-300 mx-auto px-6 pt-4 pb-12">
         <h2 className="text-[32px] font-medium text-[#2E8540] tracking-tight mb-2 font-heading">
           Welcome to Software and Drivers
         </h2>
@@ -73,45 +73,60 @@ export default function SoftwareDriversPage() {
       </section>
 
       {/* 4. RECTANGULAR PRODUCT SELECT CARDS (Exactly as image) */}
-      <section className="max-w-[1200px] mx-auto px-6 pb-20">
-        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-6">
-          
-          {/* Printer Box */}
-          <div className="bg-white border border-gray-100 shadow-[0_4px_25px_rgba(0,0,0,0.05)] rounded-sm py-10 px-4 flex flex-col items-center justify-center group cursor-pointer hover:shadow-md transition-shadow">
-            <Printer className="w-11 h-11 text-[#1A74F2] mb-4 stroke-[1.5]" />
-            <span className="text-[17px] font-medium text-black font-heading">Printer</span>
-          </div>
+      <section className="max-w-300 mx-auto px-6 pb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-6">
+        
+        {/* Printer Box */}
+        <a 
+          href="/printer-setup" // Add your redirection link here
+          className=" bg-white border border-gray-100 shadow-[0_4px_25px_rgba(0,0,0,0.05)] rounded-sm py-10 px-4 flex flex-col items-center justify-center group cursor-pointer hover:shadow-md transition-shadow no-underline"
+        >
+          <Printer className="w-11 h-11 text-[#1A74F2] mb-4 stroke-[1.5]" />
+          <span className="text-[17px] font-medium text-black font-heading">Printer</span>
+        </a>
 
-          {/* Laptop Box */}
-          <div className="bg-white border border-gray-100 shadow-[0_4px_25px_rgba(0,0,0,0.05)] rounded-sm py-10 px-4 flex flex-col items-center justify-center group cursor-pointer hover:shadow-md transition-shadow">
-            <Laptop className="w-11 h-11 text-[#1A74F2] mb-4 stroke-[1.5]" />
-            <span className="text-[17px] font-medium text-black font-heading">Laptop</span>
-          </div>
+        {/* Laptop Box */}
+        <a 
+          href="/laptop-setup" // Add your redirection link here
+          className=" bg-white border border-gray-100 shadow-[0_4px_25px_rgba(0,0,0,0.05)] rounded-sm py-10 px-4 flex flex-col items-center justify-center group cursor-pointer hover:shadow-md transition-shadow no-underline"
+        >
+          <Laptop className="w-11 h-11 text-[#1A74F2] mb-4 stroke-[1.5]" />
+          <span className="text-[17px] font-medium text-black font-heading">Laptop</span>
+        </a>
 
-          {/* Desktop Box */}
-          <div className="bg-white border border-gray-100 shadow-[0_4px_25px_rgba(0,0,0,0.05)] rounded-sm py-10 px-4 flex flex-col items-center justify-center group cursor-pointer hover:shadow-md transition-shadow">
-            <Monitor className="w-11 h-11 text-[#1A74F2] mb-4 stroke-[1.5]" />
-            <span className="text-[17px] font-medium text-black font-heading">Desktop</span>
-          </div>
+        {/* Desktop Box */}
+        <a 
+          href="/desktop-setup" // Add your redirection link here
+          className=" bg-white border border-gray-100 shadow-[0_4px_25px_rgba(0,0,0,0.05)] rounded-sm py-10 px-4 flex flex-col items-center justify-center group cursor-pointer hover:shadow-md transition-shadow no-underline"
+        >
+          <Monitor className="w-11 h-11 text-[#1A74F2] mb-4 stroke-[1.5]" />
+          <span className="text-[17px] font-medium text-black font-heading">Desktop</span>
+        </a>
 
-          {/* Audio Box */}
-          <div className="bg-white border border-gray-100 shadow-[0_4px_25px_rgba(0,0,0,0.05)] rounded-sm py-10 px-4 flex flex-col items-center justify-center group cursor-pointer hover:shadow-md transition-shadow">
-            <Headphones className="w-11 h-11 text-[#1A74F2] mb-4 stroke-[1.5]" />
-            <span className="text-[17px] font-medium text-black font-heading">Audio</span>
-          </div>
+        {/* Audio Box */}
+        <a 
+          href="/audio-setup" // Add your redirection link here
+          className=" bg-white border border-gray-100 shadow-[0_4px_25px_rgba(0,0,0,0.05)] rounded-sm py-10 px-4 flex flex-col items-center justify-center group cursor-pointer hover:shadow-md transition-shadow no-underline"
+        >
+          <Headphones className="w-11 h-11 text-[#1A74F2] mb-4 stroke-[1.5]" />
+          <span className="text-[17px] font-medium text-black font-heading">Audio</span>
+        </a>
 
-          {/* Other Box */}
-          <div className="bg-white border border-gray-100 shadow-[0_4px_25px_rgba(0,0,0,0.05)] rounded-sm py-10 px-4 flex flex-col items-center justify-center group cursor-pointer hover:shadow-md transition-shadow">
-            <HardDrive className="w-11 h-11 text-[#1A74F2] mb-4 stroke-[1.5]" />
-            <span className="text-[17px] font-medium text-black font-heading">Other</span>
-          </div>
+        {/* Other Box */}
+        <a 
+          href="/category/other" // Add your redirection link here
+          className=" bg-white border border-gray-100 shadow-[0_4px_25px_rgba(0,0,0,0.05)] rounded-sm py-10 px-4 flex flex-col items-center justify-center group cursor-pointer hover:shadow-md transition-shadow no-underline"
+        >
+          <HardDrive className="w-11 h-11 text-[#1A74F2] mb-4 stroke-[1.5]" />
+          <span className="text-[17px] font-medium text-black font-heading">Other</span>
+        </a>
 
-        </div>
-      </section>
+      </div>
+    </section>
 
       {/* 5. ACCORDION (ABOUT DRIVERS SECTION) */}
       <section className="w-full bg-white border-t border-gray-200 pt-14 pb-28 px-6">
-        <div className="max-w-[1200px] mx-auto">
+        <div className="max-w-300 mx-auto">
           <h3 className="text-[30px] font-normal text-black tracking-tight mb-8 font-heading">
             About Software and Drivers
           </h3>
@@ -139,7 +154,7 @@ export default function SoftwareDriversPage() {
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <p className="max-w-[880px] text-gray-600 font-normal">{faq.answer}</p>
+                      <p className="max-w-220 text-gray-600 font-normal">{faq.answer}</p>
                     </div>
                   </div>
                 </div>

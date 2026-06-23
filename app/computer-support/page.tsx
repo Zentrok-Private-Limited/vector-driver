@@ -25,28 +25,28 @@ export default function ComputerSupportPage() {
       <section className="w-full bg-white border-b border-gray-200">
         <div className="max-w-[1200px] mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-200">
           
-          <a href="#" className="py-5 px-4 flex flex-col items-center justify-center group hover:bg-gray-50 transition-colors">
+          <a href="/laptop-setup" className="py-5 px-4 flex flex-col items-center justify-center group hover:bg-gray-50 transition-colors">
             <Download className="w-5 h-5 text-gray-400 mb-2 group-hover:text-[#3A76D2]" />
             <span className="text-[13px] text-[#1A74F2] font-medium group-hover:underline flex items-center">
               Download drivers <ChevronRight className="w-3 h-3 ml-0.5" />
             </span>
           </a>
 
-          <a href="#" className="py-5 px-4 flex flex-col items-center justify-center group hover:bg-gray-50 transition-colors">
+          <a href="/contact" className="py-5 px-4 flex flex-col items-center justify-center group hover:bg-gray-50 transition-colors">
             <ShieldCheck className="w-5 h-5 text-gray-400 mb-2 group-hover:text-[#3A76D2]" />
             <span className="text-[13px] text-[#1A74F2] font-medium group-hover:underline flex items-center">
               Warranty & Repair <ChevronRight className="w-3 h-3 ml-0.5" />
             </span>
           </a>
 
-          <a href="#" className="py-5 px-4 flex flex-col items-center justify-center group hover:bg-gray-50 transition-colors">
+          <a href="/contact" className="py-5 px-4 flex flex-col items-center justify-center group hover:bg-gray-50 transition-colors">
             <User className="w-5 h-5 text-gray-400 mb-2 group-hover:text-[#3A76D2]" />
             <span className="text-[13px] text-[#1A74F2] font-medium group-hover:underline flex items-center">
               Contact us <ChevronRight className="w-3 h-3 ml-0.5" />
             </span>
           </a>
 
-          <a href="#" className="py-5 px-4 flex flex-col items-center justify-center group hover:bg-gray-50 transition-colors">
+          <a href="/contact" className="py-5 px-4 flex flex-col items-center justify-center group hover:bg-gray-50 transition-colors">
             <MessageSquare className="w-5 h-5 text-gray-400 mb-2 group-hover:text-[#3A76D2]" />
             <span className="text-[13px] text-[#1A74F2] font-medium group-hover:underline flex items-center">
               Live Assistance <ChevronRight className="w-3 h-3 ml-0.5" />
@@ -79,9 +79,9 @@ export default function ComputerSupportPage() {
             </p>
             
             <div className="pt-2">
-              <button className="bg-[#3A76D2] text-white px-6 py-2.5 text-[15px] font-medium rounded-sm hover:bg-[#2C5EB0] transition-colors font-heading shadow-sm">
+              <a href="/laptop-setup" className="bg-[#3A76D2] text-white px-6 py-2.5 text-[15px] font-medium rounded-sm hover:bg-[#2C5EB0] transition-colors font-heading shadow-sm">
                 Computer Setup
-              </button>
+              </a>
             </div>
 
             <div className="pt-4 space-y-1">
@@ -111,12 +111,12 @@ export default function ComputerSupportPage() {
               <p className="text-[14px] text-gray-600 leading-relaxed mb-5 max-w-xs">
                 Troubleshooting steps to optimize performance and resolve BSOD or system instability issues.
               </p>
-              <button className="bg-[#3A76D2] text-white px-5 py-2 text-[14px] font-medium rounded-sm hover:bg-[#2C5EB0] transition-colors mb-4 font-heading">
+              <a href="/laptop-setup" className="bg-[#3A76D2] text-white px-5 py-2 text-[14px] font-medium rounded-sm hover:bg-[#2C5EB0] transition-colors mb-4 font-heading">
                 Fix Performance
-              </button>
+              </a>
               <div className="text-[13px] text-gray-500 font-normal">
                 <span className="block font-semibold text-gray-800 mb-0.5">More support options for this topic:</span>
-                <a href="#" className="text-[#1A74F2] hover:underline inline-flex items-center">
+                <a href="/contact" className="text-[#1A74F2] hover:underline inline-flex items-center">
                   System recovery guides <ChevronRight className="w-3 h-3 ml-0.5" />
                 </a>
               </div>
@@ -133,12 +133,12 @@ export default function ComputerSupportPage() {
               <p className="text-[14px] text-gray-600 leading-relaxed mb-5 max-w-xs">
                 Instant access to the latest BIOS, Chipset, Graphics, and Network hardware drivers.
               </p>
-              <button className="bg-[#3A76D2] text-white px-5 py-2 text-[14px] font-medium rounded-sm hover:bg-[#2C5EB0] transition-colors mb-4 font-heading">
+              <a href="/laptop-setup" className="bg-[#3A76D2] text-white px-5 py-2 text-[14px] font-medium rounded-sm hover:bg-[#2C5EB0] transition-colors mb-4 font-heading">
                 Get Drivers
-              </button>
+              </a>
               <div className="text-[13px] text-gray-500 font-normal">
                 <span className="block font-semibold text-gray-800 mb-0.5">More support options for this topic:</span>
-                <a href="#" className="text-[#1A74F2] hover:underline inline-flex items-center">
+                <a href="/contact" className="text-[#1A74F2] hover:underline inline-flex items-center">
                   Manual search assistance <ChevronRight className="w-3 h-3 ml-0.5" />
                 </a>
               </div>
@@ -153,12 +153,12 @@ export default function ComputerSupportPage() {
               <p className="text-[14px] text-gray-600 leading-relaxed mb-5 max-w-xs">
                 Use automated tools to identify hardware failures and verify system health before installation.
               </p>
-              <button className="bg-[#3A76D2] text-white px-5 py-2 text-[14px] font-medium rounded-sm hover:bg-[#2C5EB0] transition-colors mb-4 font-heading">
+              <a href="/laptop-setup" className="bg-[#3A76D2] text-white px-5 py-2 text-[14px] font-medium rounded-sm hover:bg-[#2C5EB0] transition-colors mb-4 font-heading">
                 Run Diagnostics
-              </button>
+              </a>
               <div className="text-[13px] text-gray-500 font-normal">
                 <span className="block font-semibold text-gray-800 mb-0.5">More support options for this topic:</span>
-                <a href="#" className="text-[#1A74F2] hover:underline inline-flex items-center">
+                <a href="/contact" className="text-[#1A74F2] hover:underline inline-flex items-center">
                   Professional tech support <ChevronRight className="w-3 h-3 ml-0.5" />
                 </a>
               </div>
@@ -205,9 +205,9 @@ export default function ComputerSupportPage() {
             </div>
 
             <div className="pt-2">
-              <button className="border border-[#3A76D2] text-[#3A76D2] px-5 py-2.5 text-[14px] font-medium rounded-sm hover:bg-blue-50 transition-colors font-heading">
+              <a href="/laptop-setup" className="border border-[#3A76D2] text-[#3A76D2] px-5 py-2.5 text-[14px] font-medium rounded-sm hover:bg-blue-50 transition-colors font-heading">
                 Or, let us help identify your computer
-              </button>
+              </a>
             </div>
           </div>
 
@@ -218,12 +218,12 @@ export default function ComputerSupportPage() {
             </h4>
             <ul className="space-y-3 text-[15px]">
               <li>
-                <a href="#" className="text-[#1A74F2] underline hover:text-[#004466] font-medium">
+                <a href="/contact" className="text-[#1A74F2] underline hover:text-[#004466] font-medium">
                   Locate your product's information label
                 </a>
               </li>
               <li>
-                <a href="#" className="text-[#1A74F2] underline hover:text-[#004466] font-medium">
+                <a href="/contact" className="text-[#1A74F2] underline hover:text-[#004466] font-medium">
                   How to find serial number video
                 </a>
               </li>

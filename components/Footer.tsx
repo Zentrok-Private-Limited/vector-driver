@@ -3,10 +3,10 @@ import React from "react";
 export default function Footer() {
   return (
     <footer className="w-full bg-black text-white py-8 px-4 text-xs">
-      <div className="max-w-[1140px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="max-w-285 mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center space-x-6">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             <img src="/logo.png" alt="logo" className="h-6 w-6" />
           </div>
           <span className="text-gray-400 font-medium">
