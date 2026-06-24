@@ -162,7 +162,7 @@ export default function Header() {
           {/* Connected Button */}
           <button 
             onClick={() => query.trim() !== "" && handleSelection(query)}
-            className="bg-[#3A76D2] text-white px-7 h-11 text-base font-medium rounded-sm hover:bg-[#2C5EB0] transition-colors font-heading flex items-center justify-center shrink-0"
+            className="bg-[#111828] text-white px-7 h-11 text-base font-medium rounded-sm hover:bg-[#2C5EB0] transition-colors font-heading flex items-center justify-center shrink-0"
           >
             Ask Us
           </button>

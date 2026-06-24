@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import {
   Search,
@@ -15,27 +15,111 @@ import {
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+// Comprehensive database list for Desktop recommendations
+const DESKTOPS_DATA = [
+  // HP Pavilion Desktop Series
+  "HP Pavilion Desktop PC", "HP Pavilion Gaming Desktop", "HP Pavilion TP01 series",
+  
+  // HP ENVY Desktop Series
+  "HP ENVY Desktop PC", "HP ENVY TE01 series", "HP ENVY TE02 series",
+
+  // HP OMEN Gaming Series
+  "HP OMEN Gaming Desktop", "HP OMEN 25L Gaming Desktop", "HP OMEN 40L Gaming Desktop", 
+  "HP OMEN 45L Gaming Desktop", "HP OMEN Obelisk Desktop",
+
+  // HP Victus Series
+  "HP Victus Desktop", "HP Victus 15L Gaming Desktop",
+
+  // HP Slim & Essential Series
+  "HP Slim Desktop", "HP Slim S01 series", "HP Desktop M01 series",
+
+  // HP All-in-One (AiO) Series
+  "HP All-in-One PC", "HP Pavilion All-in-One PC", "HP ENVY All-in-One PC", 
+  "HP Blend All-in-One PC", "HP 22 All-in-One PC", "HP 24 All-in-One PC", "HP 27 All-in-One PC",
+
+  // HP ProDesk Commercial Series
+  "HP ProDesk 400 G6 series", "HP ProDesk 400 series", "HP ProDesk 600 series", 
+  "HP Pro600 Desktop PC",
+
+  // HP EliteDesk Commercial Series
+  "HP EliteDesk 800 G5 series", "HP EliteDesk 800 G6 series", "HP EliteDesk 800 series", 
+  "HP Elite Mini PC", "HP Elite SFF PC",
+
+  // HP Z Workstation Series
+  "HP Workstation Z series", "HP Z1 G8 Tower Workstation", "HP Z2 Mini Workstation", 
+  "HP Z2 Tower Workstation", "HP Z4 Workstation", "HP Z6 Workstation", "HP Z8 Workstation",
+
+  // Generic Detection Response
+  "HP Desktop Detected"
+];
+
 export default function DesktopSetupPage() {
   const router = useRouter();
   const [inputValue, setInputValue] = useState("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleSearch = () => {
-    if (inputValue.trim() !== "") {
-      // Replaces spaces with dashes cleanly for clean web URLs
-      const urlSafeName = encodeURIComponent(inputValue.trim().replace(/\s+/g, "-"));
-      router.push(`/download/${urlSafeName}`);
+  // Close dropdown if clicked outside the container context boundary
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDropdown(false);
+      }
     }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+    setActiveIndex(-1);
+
+    if (value.trim().length > 0) {
+      const filtered = DESKTOPS_DATA.filter((item) =>
+        item.toLowerCase().includes(value.toLowerCase())
+      ).slice(0, 8); // Limits dropdown visibility layout matrix to top 8 items
+      setSuggestions(filtered);
+      setShowDropdown(true);
+    } else {
+      setSuggestions([]);
+      setShowDropdown(false);
+    }
+  };
+
+  const handleSelection = (productName: string) => {
+    setInputValue(productName);
+    setShowDropdown(false);
+    const urlSafeName = encodeURIComponent(productName.trim().replace(/\s+/g, "-"));
+    router.push(`/download/${urlSafeName}`);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleSearch();
+    if (!showDropdown) {
+      if (e.key === "Enter" && inputValue.trim() !== "") {
+        handleSelection(inputValue);
+      }
+      return;
     }
-  };
 
-  const handlePopularClick = (name: string) => {
-    const urlSafeName = encodeURIComponent(name.trim().replace(/\s+/g, "-"));
-    router.push(`/download/${urlSafeName}`);
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : prev));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIndex((prev) => (prev > 0 ? prev - 1 : prev));
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (activeIndex >= 0 && activeIndex < suggestions.length) {
+        handleSelection(suggestions[activeIndex]);
+      } else if (inputValue.trim() !== "") {
+        handleSelection(inputValue);
+      }
+    } else if (e.key === "Escape") {
+      setShowDropdown(false);
+    }
   };
 
   return (
@@ -128,6 +212,7 @@ export default function DesktopSetupPage() {
       {/* 4. IDENTIFICATION MAIN SEARCH AREA */}
       <section className="max-w-300 mx-auto px-6 py-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start border-b border-gray-200 pb-16">
+          
           {/* Left Block: Desktop Model Entry Input */}
           <div className="lg:col-span-7 space-y-6">
             <h2 className="text-[32px] font-normal text-black tracking-wide font-heading">
@@ -139,28 +224,55 @@ export default function DesktopSetupPage() {
                 Enter your serial number, product number or product name
               </label>
 
-              <div className="relative max-w-120">
-                <input
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Example: HP Pavilion Desktop"
-                  className="w-full bg-white border border-gray-400 rounded-lg pl-5 pr-12 h-11 text-[16px] text-black tracking-wide focus:outline-none focus:border-gray-600 placeholder-gray-400"
-                />
-                <button 
-                  onClick={handleSearch}
-                  className="absolute right-4 top-3 text-gray-500 hover:text-black transition-colors"
-                >
-                  <Search className="w-5 h-5 stroke-[2.5]" />
-                </button>
+              {/* Smart Dropdown Ref Anchor Wrapper */}
+              <div ref={dropdownRef} className="relative max-w-120">
+                <div className="relative flex items-center border border-gray-400 bg-white px-5 h-11 rounded-lg focus-within:border-gray-600 transition-colors">
+                  <input
+                    type="text"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
+                    onFocus={() => inputValue.trim().length > 0 && setShowDropdown(true)}
+                    placeholder="Example: HP Pavilion Desktop"
+                    className="w-full pr-10 text-[16px] text-black placeholder-gray-400 focus:outline-none font-subheading font-normal bg-transparent tracking-wide"
+                  />
+                  <button 
+                    onClick={() => inputValue.trim() !== "" && handleSelection(inputValue)}
+                    className="absolute right-4 text-gray-500 hover:text-black transition-colors"
+                  >
+                    <Search className="w-5 h-5 stroke-[2.5]" />
+                  </button>
+                </div>
+
+                {/* DYNAMIC COMPILING AUTOCOMPLETE DROPDOWN MODAL */}
+                {showDropdown && suggestions.length > 0 && (
+                  <div className="absolute top-[48px] left-0 w-full bg-white border border-gray-200 shadow-2xl rounded-lg overflow-hidden z-50 animate-in fade-in duration-100">
+                    <ul className="py-1.5 max-h-[280px] overflow-y-auto">
+                      {suggestions.map((item, index) => (
+                        <li
+                          key={item}
+                          onClick={() => handleSelection(item)}
+                          onMouseEnter={() => setActiveIndex(index)}
+                          className={`px-5 py-3 text-[15px] cursor-pointer flex items-center justify-between transition-colors ${
+                            index === activeIndex 
+                              ? "bg-gray-100 text-blue-600 font-medium" 
+                              : "text-gray-700"
+                          }`}
+                        >
+                          <span>{item}</span>
+                          <span className="text-[12px] opacity-40">→</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Interactive Model Finder Link */}
             <div className="pt-2">
               <button
-                onClick={() => handlePopularClick("HP Desktop Detected")}
+                onClick={() => handleSelection("HP Desktop Detected")}
                 className="inline-flex items-center space-x-2 text-[#006699] font-medium hover:underline text-[14px]"
               >
                 <Scan className="w-4 h-4 text-[#3A76D2]" />
@@ -196,19 +308,19 @@ export default function DesktopSetupPage() {
           {/* Column Group 1 */}
           <div className="space-y-3.5">
             <button
-              onClick={() => handlePopularClick("HP Pavilion Desktop PC")}
+              onClick={() => handleSelection("HP Pavilion Desktop PC")}
               className="text-[#006699] hover:underline font-medium block text-left"
             >
               HP Pavilion Desktop PC
             </button>
             <button
-              onClick={() => handlePopularClick("HP Victus Desktop")}
+              onClick={() => handleSelection("HP Victus Desktop")}
               className="text-[#006699] hover:underline font-medium block text-left"
             >
               HP Victus Desktop
             </button>
             <button
-              onClick={() => handlePopularClick("HP EliteDesk 800 series")}
+              onClick={() => handleSelection("HP EliteDesk 800 series")}
               className="text-[#006699] hover:underline font-medium block text-left"
             >
               HP EliteDesk 800 series
@@ -218,19 +330,19 @@ export default function DesktopSetupPage() {
           {/* Column Group 2 */}
           <div className="space-y-3.5">
             <button
-              onClick={() => handlePopularClick("HP ENVY Desktop PC")}
+              onClick={() => handleSelection("HP ENVY Desktop PC")}
               className="text-[#006699] hover:underline font-medium block text-left"
             >
               HP ENVY Desktop PC
             </button>
             <button
-              onClick={() => handlePopularClick("HP Slim Desktop")}
+              onClick={() => handleSelection("HP Slim Desktop")}
               className="text-[#006699] hover:underline font-medium block text-left"
             >
               HP Slim Desktop
             </button>
             <button
-              onClick={() => handlePopularClick("HP ProDesk 400 series")}
+              onClick={() => handleSelection("HP ProDesk 400 series")}
               className="text-[#006699] hover:underline font-medium block text-left"
             >
               HP ProDesk 400 series
@@ -240,19 +352,19 @@ export default function DesktopSetupPage() {
           {/* Column Group 3 */}
           <div className="space-y-3.5">
             <button
-              onClick={() => handlePopularClick("HP OMEN Gaming Desktop")}
+              onClick={() => handleSelection("HP OMEN Gaming Desktop")}
               className="text-[#006699] hover:underline font-medium block text-left"
             >
               HP OMEN Gaming Desktop
             </button>
             <button
-              onClick={() => handlePopularClick("HP All-in-One PC")}
+              onClick={() => handleSelection("HP All-in-One PC")}
               className="text-[#006699] hover:underline font-medium block text-left"
             >
               HP All-in-One PC
             </button>
             <button
-              onClick={() => handlePopularClick("HP Workstation Z series")}
+              onClick={() => handleSelection("HP Workstation Z series")}
               className="text-[#006699] hover:underline font-medium block text-left"
             >
               HP Workstation Z series
