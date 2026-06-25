@@ -246,8 +246,8 @@ export default function DesktopSetupPage() {
 
                 {/* DYNAMIC COMPILING AUTOCOMPLETE DROPDOWN MODAL */}
                 {showDropdown && suggestions.length > 0 && (
-                  <div className="absolute top-[48px] left-0 w-full bg-white border border-gray-200 shadow-2xl rounded-lg overflow-hidden z-50 animate-in fade-in duration-100">
-                    <ul className="py-1.5 max-h-[280px] overflow-y-auto">
+                  <div className="absolute top-12 left-0 w-full bg-white border border-gray-200 shadow-2xl rounded-lg overflow-hidden z-50 animate-in fade-in duration-100">
+                    <ul className="py-1.5 max-h-70 overflow-y-auto">
                       {suggestions.map((item, index) => (
                         <li
                           key={item}
@@ -383,7 +383,6 @@ export default function DesktopSetupPage() {
         </div>
       </div>
 
-      {/* 7. STANDARD STICKY LOWER LEGAL FRAME STRIP */}
       <Footer />
     </div>
   );
