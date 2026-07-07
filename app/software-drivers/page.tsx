@@ -114,7 +114,7 @@ export default function SoftwareDriversPage() {
 
         {/* Other Box */}
         <a 
-          href="/category/other" // Add your redirection link here
+          href="/contact" // Add your redirection link here
           className=" bg-white border border-gray-100 shadow-[0_4px_25px_rgba(0,0,0,0.05)] rounded-sm py-10 px-4 flex flex-col items-center justify-center group cursor-pointer hover:shadow-md transition-shadow no-underline"
         >
           <HardDrive className="w-11 h-11 text-[#1A74F2] mb-4 stroke-[1.5]" />

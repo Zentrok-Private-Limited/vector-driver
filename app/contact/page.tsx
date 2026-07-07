@@ -8,6 +8,12 @@ import Footer from "@/components/Footer";
 export default function ContactSupportPage() {
   const [category, setCategory] = useState("");
 
+  const openChat = () => {
+    if (typeof window !== "undefined" && window.jivo_api) {
+      window.jivo_api.open();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#FAFAFA] antialiased text-[#333333] font-subheading font-normal text-[15px]">
       
@@ -52,9 +58,9 @@ export default function ContactSupportPage() {
                   </div>
                   <div>
                     <h4 className="text-[16px] font-semibold text-black font-heading">Live Chat</h4>
-                    <a href="#" className="text-[14px] text-[#3A76D2] font-medium hover:underline block mt-0.5">
+                    <button onClick={openChat} className="text-[14px] text-[#3A76D2] font-medium hover:underline block mt-0.5">
                       Start Chatting Now
-                    </a>
+                    </button>
                   </div>
                 </div>
 
@@ -65,8 +71,8 @@ export default function ContactSupportPage() {
                   </div>
                   <div>
                     <h4 className="text-[16px] font-semibold text-black font-heading">Email Support</h4>
-                    <span className="text-[14px] text-gray-500 block mt-0.5">
-                      support@thedriverhp.com
+                    <span className="text-[14px] text-[#3A76D2] block mt-0.5">
+                      info@printerassistance.com
                     </span>
                   </div>
                 </div>

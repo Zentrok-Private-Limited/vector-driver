@@ -18,7 +18,7 @@ type StepConfig = {
 const downloadSteps: StepConfig[] = [
   { title: "Step 1: Initializing", subtitle: "Scanning system for hardware compatibility...", percentage: 0, color: "blue" },
   { title: "Step 2: Analyzing", subtitle: "Checking for existing driver versions and conflicts...", percentage: 15, color: "blue" },
-  { title: "Step 3: Connecting", subtitle: "Establishing secure connection to official HP servers...", percentage: 32, color: "blue" },
+  { title: "Step 3: Connecting", subtitle: "Establishing secure connection to official servers...", percentage: 32, color: "blue" },
   { title: "Step 4: Downloading", subtitle: "Fetching secure driver package (142.5 MB)...", percentage: 58, color: "blue" },
   { title: "Step 5: Verifying", subtitle: "Validating digital signatures and file integrity...", percentage: 74, color: "blue" },
   { title: "Step 6: Finishing", subtitle: "Preparing installer for your operating system...", percentage: 89, color: "blue" },
@@ -34,6 +34,11 @@ const installSteps: StepConfig[] = [
 ];
 
 export default function DownloadPage() {
+    const openChat = () => {
+    if (typeof window !== "undefined" && window.jivo_api) {
+      window.jivo_api.open();
+    }
+  };
   const params = useParams();
   const router = useRouter();
   
@@ -43,7 +48,7 @@ export default function DownloadPage() {
 
   const printerName = params.id 
     ? decodeURIComponent(params.id as string).replace(/-/g, " ") 
-    : "HP DeskJet 1110 Printer series";
+    : "Unknown Printer";
 
   // Handles Phase 1: Downloading Timers
   useEffect(() => {
@@ -232,15 +237,10 @@ export default function DownloadPage() {
 
               {/* Error Action Support Buttons */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6 w-full max-w-md mx-auto">
-                <button className="w-full sm:w-auto bg-[#3A76D2] hover:bg-[#2C5EB0] text-white px-6 py-2.5 rounded-lg flex items-center justify-center space-x-2 font-medium text-[14px] shadow-xs cursor-pointer transition-colors">
+                <button onClick={openChat} className="w-full sm:w-auto bg-[#3A76D2] hover:bg-[#2C5EB0] text-white px-6 py-2.5 rounded-lg flex items-center justify-center space-x-2 font-medium text-[14px] shadow-xs cursor-pointer transition-colors">
                   <MessageSquare className="w-4 h-4 fill-white text-[#3A76D2]" />
                   <span>Chat with Support</span>
                 </button>
-                
-                <a href="/contact" className="w-full sm:w-auto border border-gray-300 hover:bg-gray-50 text-gray-700 px-6 py-2.5 rounded-lg flex items-center justify-center space-x-2 font-medium text-[14px] shadow-xs cursor-pointer transition-colors">
-                  <Mail className="w-4 h-4 text-gray-500" />
-                  <span>Contact Support</span>
-                </a>
               </div>
             </div>
           )}

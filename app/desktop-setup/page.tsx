@@ -15,43 +15,6 @@ import {
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-// Comprehensive database list for Desktop recommendations
-const DESKTOPS_DATA = [
-  // HP Pavilion Desktop Series
-  "HP Pavilion Desktop PC", "HP Pavilion Gaming Desktop", "HP Pavilion TP01 series",
-  
-  // HP ENVY Desktop Series
-  "HP ENVY Desktop PC", "HP ENVY TE01 series", "HP ENVY TE02 series",
-
-  // HP OMEN Gaming Series
-  "HP OMEN Gaming Desktop", "HP OMEN 25L Gaming Desktop", "HP OMEN 40L Gaming Desktop", 
-  "HP OMEN 45L Gaming Desktop", "HP OMEN Obelisk Desktop",
-
-  // HP Victus Series
-  "HP Victus Desktop", "HP Victus 15L Gaming Desktop",
-
-  // HP Slim & Essential Series
-  "HP Slim Desktop", "HP Slim S01 series", "HP Desktop M01 series",
-
-  // HP All-in-One (AiO) Series
-  "HP All-in-One PC", "HP Pavilion All-in-One PC", "HP ENVY All-in-One PC", 
-  "HP Blend All-in-One PC", "HP 22 All-in-One PC", "HP 24 All-in-One PC", "HP 27 All-in-One PC",
-
-  // HP ProDesk Commercial Series
-  "HP ProDesk 400 G6 series", "HP ProDesk 400 series", "HP ProDesk 600 series", 
-  "HP Pro600 Desktop PC",
-
-  // HP EliteDesk Commercial Series
-  "HP EliteDesk 800 G5 series", "HP EliteDesk 800 G6 series", "HP EliteDesk 800 series", 
-  "HP Elite Mini PC", "HP Elite SFF PC",
-
-  // HP Z Workstation Series
-  "HP Workstation Z series", "HP Z1 G8 Tower Workstation", "HP Z2 Mini Workstation", 
-  "HP Z2 Tower Workstation", "HP Z4 Workstation", "HP Z6 Workstation", "HP Z8 Workstation",
-
-  // Generic Detection Response
-  "HP Desktop Detected"
-];
 
 export default function DesktopSetupPage() {
   const router = useRouter();
@@ -61,33 +24,6 @@ export default function DesktopSetupPage() {
   const [activeIndex, setActiveIndex] = useState(-1);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown if clicked outside the container context boundary
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setShowDropdown(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInputValue(value);
-    setActiveIndex(-1);
-
-    if (value.trim().length > 0) {
-      const filtered = DESKTOPS_DATA.filter((item) =>
-        item.toLowerCase().includes(value.toLowerCase())
-      ).slice(0, 8); // Limits dropdown visibility layout matrix to top 8 items
-      setSuggestions(filtered);
-      setShowDropdown(true);
-    } else {
-      setSuggestions([]);
-      setShowDropdown(false);
-    }
-  };
 
   const handleSelection = (productName: string) => {
     setInputValue(productName);
@@ -96,31 +32,6 @@ export default function DesktopSetupPage() {
     router.push(`/download/${urlSafeName}`);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!showDropdown) {
-      if (e.key === "Enter" && inputValue.trim() !== "") {
-        handleSelection(inputValue);
-      }
-      return;
-    }
-
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setActiveIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : prev));
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setActiveIndex((prev) => (prev > 0 ? prev - 1 : prev));
-    } else if (e.key === "Enter") {
-      e.preventDefault();
-      if (activeIndex >= 0 && activeIndex < suggestions.length) {
-        handleSelection(suggestions[activeIndex]);
-      } else if (inputValue.trim() !== "") {
-        handleSelection(inputValue);
-      }
-    } else if (e.key === "Escape") {
-      setShowDropdown(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-white antialiased text-[#333333] font-subheading font-normal text-[15px]">
@@ -230,10 +141,8 @@ export default function DesktopSetupPage() {
                   <input
                     type="text"
                     value={inputValue}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
-                    onFocus={() => inputValue.trim().length > 0 && setShowDropdown(true)}
-                    placeholder="Example: HP Pavilion Desktop"
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder="Enter your serial number, product number or product name"
                     className="w-full pr-10 text-[16px] text-black placeholder-gray-400 focus:outline-none font-subheading font-normal bg-transparent tracking-wide"
                   />
                   <button 
@@ -243,36 +152,13 @@ export default function DesktopSetupPage() {
                     <Search className="w-5 h-5 stroke-[2.5]" />
                   </button>
                 </div>
-
-                {/* DYNAMIC COMPILING AUTOCOMPLETE DROPDOWN MODAL */}
-                {showDropdown && suggestions.length > 0 && (
-                  <div className="absolute top-12 left-0 w-full bg-white border border-gray-200 shadow-2xl rounded-lg overflow-hidden z-50 animate-in fade-in duration-100">
-                    <ul className="py-1.5 max-h-70 overflow-y-auto">
-                      {suggestions.map((item, index) => (
-                        <li
-                          key={item}
-                          onClick={() => handleSelection(item)}
-                          onMouseEnter={() => setActiveIndex(index)}
-                          className={`px-5 py-3 text-[15px] cursor-pointer flex items-center justify-between transition-colors ${
-                            index === activeIndex 
-                              ? "bg-gray-100 text-blue-600 font-medium" 
-                              : "text-gray-700"
-                          }`}
-                        >
-                          <span>{item}</span>
-                          <span className="text-[12px] opacity-40">→</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
               </div>
             </div>
 
             {/* Interactive Model Finder Link */}
             <div className="pt-2">
               <button
-                onClick={() => handleSelection("HP Desktop Detected")}
+                onClick={() => handleSelection("Desktop Detected")}
                 className="inline-flex items-center space-x-2 text-[#006699] font-medium hover:underline text-[14px]"
               >
                 <Scan className="w-4 h-4 text-[#3A76D2]" />
@@ -287,9 +173,9 @@ export default function DesktopSetupPage() {
               Examples of where to find your product name
             </h3>
 
-            <div className="relative w-full max-w-85 pt-2">
+            <div className="relative w-full max-w-xl pt-2">
               <img
-                src="/printer-setup1.avif"
+                src="/hero2.png"
                 alt="Product visual guide layout matrix metadata illustration chart"
                 className="w-full h-auto object-contain mix-blend-multiply"
               />
@@ -305,83 +191,81 @@ export default function DesktopSetupPage() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-4 gap-x-12 text-[14px]">
-          {/* Column Group 1 */}
-          <div className="space-y-3.5">
-            <button
-              onClick={() => handleSelection("HP Pavilion Desktop PC")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP Pavilion Desktop PC
-            </button>
-            <button
-              onClick={() => handleSelection("HP Victus Desktop")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP Victus Desktop
-            </button>
-            <button
-              onClick={() => handleSelection("HP EliteDesk 800 series")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP EliteDesk 800 series
-            </button>
-          </div>
 
-          {/* Column Group 2 */}
-          <div className="space-y-3.5">
-            <button
-              onClick={() => handleSelection("HP ENVY Desktop PC")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP ENVY Desktop PC
-            </button>
-            <button
-              onClick={() => handleSelection("HP Slim Desktop")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP Slim Desktop
-            </button>
-            <button
-              onClick={() => handleSelection("HP ProDesk 400 series")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP ProDesk 400 series
-            </button>
-          </div>
+  {/* Column 1 */}
+  <div className="space-y-3.5">
+    <button
+      onClick={() => handleSelection("Dell OptiPlex 7020")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Dell OptiPlex 7020
+    </button>
 
-          {/* Column Group 3 */}
-          <div className="space-y-3.5">
-            <button
-              onClick={() => handleSelection("HP OMEN Gaming Desktop")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP OMEN Gaming Desktop
-            </button>
-            <button
-              onClick={() => handleSelection("HP All-in-One PC")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP All-in-One PC
-            </button>
-            <button
-              onClick={() => handleSelection("HP Workstation Z series")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP Workstation Z series
-            </button>
-          </div>
-        </div>
+    <button
+      onClick={() => handleSelection("HP EliteDesk 800 G9")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      HP EliteDesk 800 G9
+    </button>
+
+    <button
+      onClick={() => handleSelection("Lenovo ThinkCentre M70q")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Lenovo ThinkCentre M70q
+    </button>
+  </div>
+
+  {/* Column 2 */}
+  <div className="space-y-3.5">
+    <button
+      onClick={() => handleSelection("Apple Mac mini M4")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Apple Mac mini M4
+    </button>
+
+    <button
+      onClick={() => handleSelection("Dell XPS Desktop")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Dell XPS Desktop
+    </button>
+
+    <button
+      onClick={() => handleSelection("ASUS ROG G22CH Gaming Desktop")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      ASUS ROG G22CH Gaming Desktop
+    </button>
+  </div>
+
+  {/* Column 3 */}
+  <div className="space-y-3.5">
+    <button
+      onClick={() => handleSelection("Acer Aspire TC Desktop")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Acer Aspire TC Desktop
+    </button>
+
+    <button
+      onClick={() => handleSelection("MSI MAG Infinite S3")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      MSI MAG Infinite S3
+    </button>
+
+    <button
+      onClick={() => handleSelection("Lenovo Legion Tower 5")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Lenovo Legion Tower 5
+    </button>
+  </div>
+
+</div>
       </section>
-
-      {/* 6. CORNER FLOATING ASSISTANCE CAP */}
-      <div className="fixed bottom-0 right-6 z-50">
-        <div className="bg-[#3F0E9C] text-white px-5 py-3 rounded-t-md flex items-center space-x-3 cursor-pointer shadow-lg hover:bg-[#310A7A] transition-colors">
-          <span className="text-[14px] font-semibold font-heading">
-            Leave a message
-          </span>
-          <MessageSquare className="w-4 h-4 fill-white text-[#3F0E9C]" />
-        </div>
-      </div>
 
       <Footer />
     </div>

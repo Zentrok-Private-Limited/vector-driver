@@ -26,13 +26,6 @@ export default function AccessoriesSetupPage() {
       router.push(`/download/${urlSafeName}`);
     }
   };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
-  };
-
   const handlePopularClick = (name: string) => {
     const urlSafeName = encodeURIComponent(name.trim().replace(/\s+/g, "-"));
     router.push(`/download/${urlSafeName}`);
@@ -144,8 +137,7 @@ export default function AccessoriesSetupPage() {
                   type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Example: HP Reverb G2"
+                  placeholder="Enter your serial number, product number or product name"
                   className="w-full bg-white border border-gray-400 rounded-lg pl-5 pr-12 h-11 text-[16px] text-black tracking-wide focus:outline-none focus:border-gray-600 placeholder-gray-400"
                 />
                 <button 
@@ -159,7 +151,7 @@ export default function AccessoriesSetupPage() {
 
             <div className="pt-2">
               <button
-                onClick={() => handlePopularClick("HP Accessory Detected")}
+                onClick={() => handlePopularClick("Accessory Detected")}
                 className="inline-flex items-center space-x-2 text-[#006699] font-medium hover:underline text-[14px]"
               >
                 <Scan className="w-4 h-4 text-[#3A76D2]" />
@@ -175,7 +167,7 @@ export default function AccessoriesSetupPage() {
             </h3>
 
             <div className="flex items-center">
-              <img src="/audio-setup1.png" alt="Hardware tag labeling chart configuration layout" />
+              <img src="/audio-setup2.png" alt="Hardware tag labeling chart configuration layout" />
             </div>
           </div>
         </div>
@@ -188,84 +180,81 @@ export default function AccessoriesSetupPage() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-4 gap-x-12 text-[14px]">
-          {/* Column Group 1 */}
-          <div className="space-y-3.5">
-            <button
-              onClick={() => handlePopularClick("HP Reverb G2 VR Headset")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP Reverb G2 VR Headset
-            </button>
-            <button
-              onClick={() => handlePopularClick("HP USB-C G5 Essential Dock")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP USB-C G5 Essential Dock
-            </button>
-            <button
-              onClick={() => handlePopularClick("HyperX Cloud II Headset")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HyperX Cloud II Headset
-            </button>
-          </div>
 
-          {/* Column Group 2 */}
-          <div className="space-y-3.5">
-            <button
-              onClick={() => handlePopularClick("HP Wired Desktop 320MK")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP Wired Desktop 320MK
-            </button>
-            <button
-              onClick={() => handlePopularClick("HP Wireless Keyboard 230")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP Wireless Keyboard 230
-            </button>
-            <button
-              onClick={() => handlePopularClick("Poly Voyager Focus 2")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              Poly Voyager Focus 2
-            </button>
-          </div>
+  {/* Column 1 */}
+  <div className="space-y-3.5">
+    <button
+      onClick={() => handlePopularClick("Logitech MX Master 3S")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Logitech MX Master 3S
+    </button>
 
-          {/* Column Group 3 */}
-          <div className="space-y-3.5">
-            <button
-              onClick={() => handlePopularClick("HP 950 4K Webcam")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP 950 4K Webcam
-            </button>
-            <button
-              onClick={() => handlePopularClick("HP 235 Wireless Mouse and Keyboard")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP 235 Wireless Mouse and Keyboard
-            </button>
-            <button
-              onClick={() => handlePopularClick("HP USB-C Dock G5")}
-              className="text-[#006699] hover:underline font-medium block text-left"
-            >
-              HP USB-C Dock G5
-            </button>
-          </div>
-        </div>
+    <button
+      onClick={() => handlePopularClick("HyperX Cloud III Gaming Headset")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      HyperX Cloud III Gaming Headset
+    </button>
+
+    <button
+      onClick={() => handlePopularClick("Dell WD22TB4 Thunderbolt Dock")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Dell WD22TB4 Thunderbolt Dock
+    </button>
+  </div>
+
+  {/* Column 2 */}
+  <div className="space-y-3.5">
+    <button
+      onClick={() => handlePopularClick("Logitech MX Keys S")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Logitech MX Keys S
+    </button>
+
+    <button
+      onClick={() => handlePopularClick("Poly Voyager Focus 2")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Poly Voyager Focus 2
+    </button>
+
+    <button
+      onClick={() => handlePopularClick("HP USB-C Dock G5")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      HP USB-C Dock G5
+    </button>
+  </div>
+
+  {/* Column 3 */}
+  <div className="space-y-3.5">
+    <button
+      onClick={() => handlePopularClick("Razer Kiyo Pro Webcam")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Razer Kiyo Pro Webcam
+    </button>
+
+    <button
+      onClick={() => handlePopularClick("Microsoft Modern Webcam")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Microsoft Modern Webcam
+    </button>
+
+    <button
+      onClick={() => handlePopularClick("Anker 777 Thunderbolt Dock")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Anker 777 Thunderbolt Dock
+    </button>
+  </div>
+
+</div>
       </section>
-
-      {/* 6. FIXED BOTTOM ASSISTANCE CHAT CAPSULE */}
-      <div className="fixed bottom-0 right-6 z-50">
-        <div className="bg-[#3F0E9C] text-white px-5 py-3 rounded-t-md flex items-center space-x-3 cursor-pointer shadow-lg hover:bg-[#310A7A] transition-colors">
-          <span className="text-[14px] font-semibold font-heading">
-            Leave a message
-          </span>
-          <MessageSquare className="w-4 h-4 fill-white text-[#3F0E9C]" />
-        </div>
-      </div>
-
       {/* 7. STANDARD HP COMPLIANT FOOTER */}
       <Footer />
     </div>

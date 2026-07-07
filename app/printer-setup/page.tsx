@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { Search, ChevronRight, Printer, Laptop, Monitor, Headphones, MessageSquare } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { PRINTERS_DATA } from "@/data/printersData";
 
 export default function PrinterSetupPage() {
   const router = useRouter();
@@ -13,67 +12,13 @@ export default function PrinterSetupPage() {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown if clicked outside the container
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setShowDropdown(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInputValue(value);
-    setActiveIndex(-1);
-
-    if (value.trim().length > 0) {
-      const filtered = PRINTERS_DATA.filter((item) =>
-        item.toLowerCase().includes(value.toLowerCase())
-      ).slice(0, 8); // Limits display view to top 8 items
-      setSuggestions(filtered);
-      setShowDropdown(true);
-    } else {
-      setSuggestions([]);
-      setShowDropdown(false);
-    }
-  };
 
   const handleSelection = (productName: string) => {
     setInputValue(productName);
     setShowDropdown(false);
     const urlSafeName = encodeURIComponent(productName.trim().replace(/\s+/g, "-"));
     router.push(`/download/${urlSafeName}`);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!showDropdown) {
-      if (e.key === "Enter" && inputValue.trim() !== "") {
-        handleSelection(inputValue);
-      }
-      return;
-    }
-
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setActiveIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : prev));
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setActiveIndex((prev) => (prev > 0 ? prev - 1 : prev));
-    } else if (e.key === "Enter") {
-      e.preventDefault();
-      if (activeIndex >= 0 && activeIndex < suggestions.length) {
-        handleSelection(suggestions[activeIndex]);
-      } else if (inputValue.trim() !== "") {
-        handleSelection(inputValue);
-      }
-    } else if (e.key === "Escape") {
-      setShowDropdown(false);
-    }
   };
 
   return (
@@ -166,15 +111,13 @@ export default function PrinterSetupPage() {
               </label>
               
               {/* Dropdown Container Context */}
-              <div ref={dropdownRef} className="relative max-w-xl">
+              <div className="relative max-w-xl">
                 <div className="relative flex items-center border border-gray-400 bg-white px-5 h-11 shadow-inner rounded-lg focus-within:border-[#007DBD] transition-colors">
                   <input
                     type="text"
                     value={inputValue}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
-                    onFocus={() => inputValue.trim().length > 0 && setShowDropdown(true)}
-                    placeholder="Example: HP OfficeJet 4630"
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder="Enter your serial number, product number or product name"
                     className="w-full pr-10 text-[16px] text-black placeholder-gray-400 focus:outline-none font-subheading font-normal bg-transparent tracking-wide"
                   />
                   <button 
@@ -217,9 +160,9 @@ export default function PrinterSetupPage() {
               Examples of where to find your product name
             </h3>
             
-            <div className="relative w-full max-w-xs pt-2">
+            <div className="relative w-full max-w-xl pt-2">
               <img 
-                src="/printer-setup1.avif" 
+                src="/hero1.png" 
                 alt="HP DeskJet sticker visual reference" 
                 className="w-full h-auto object-contain mix-blend-multiply"
               />
@@ -236,47 +179,80 @@ export default function PrinterSetupPage() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-4 gap-x-12 text-[14px]">
-          
-          {/* Column Group 1 */}
-          <div className="space-y-3.5">
-            <button onClick={() => handleSelection("HP DeskJet 2300 All-in-One Printer series")} className="text-[#006699] hover:underline font-medium block text-left">
-              HP DeskJet 2300 All-in-One Printer series
-            </button>
-            <button onClick={() => handleSelection("HP LaserJet 1018 Printer")} className="text-[#006699] hover:underline font-medium block text-left">
-              HP LaserJet 1018 Printer
-            </button>
-            <button onClick={() => handleSelection("HP LaserJet P1008 Printer")} className="text-[#006699] hover:underline font-medium block text-left">
-              HP LaserJet P1008 Printer
-            </button>
-          </div>
 
-          {/* Column Group 2 */}
-          <div className="space-y-3.5">
-            <button onClick={() => handleSelection("HP DeskJet GT 5820 All-in-One Printer series")} className="text-[#006699] hover:underline font-medium block text-left">
-              HP DeskJet GT 5820 All-in-One Printer series
-            </button>
-            <button onClick={() => handleSelection("HP LaserJet P1007 Printer")} className="text-[#006699] hover:underline font-medium block text-left">
-              HP LaserJet P1007 Printer
-            </button>
-            <button onClick={() => handleSelection("HP LaserJet Pro M202 series")} className="text-[#006699] hover:underline font-medium block text-left">
-              HP LaserJet Pro M202 series
-            </button>
-          </div>
+  {/* Column 1 */}
+  <div className="space-y-3.5">
+    <button
+      onClick={() => handleSelection("HP DeskJet 2820e All-in-One Printer")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      HP DeskJet 2820e All-in-One Printer
+    </button>
 
-          {/* Column Group 3 */}
-          <div className="space-y-3.5">
-            <button onClick={() => handleSelection("HP Ink Tank 310 series")} className="text-[#006699] hover:underline font-medium block text-left">
-              HP Ink Tank 310 series
-            </button>
-            <button onClick={() => handleSelection("HP Laser 100 Printer series")} className="text-[#006699] hover:underline font-medium block text-left">
-              HP Laser 100 Printer series
-            </button>
-            <button onClick={() => handleSelection("HP Laser MFP 1000 Printer series")} className="text-[#006699] hover:underline font-medium block text-left">
-              HP Laser MFP 1000 Printer series
-            </button>
-          </div>
+    <button
+      onClick={() => handleSelection("Canon PIXMA G3770 MegaTank Printer")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Canon PIXMA G3770 MegaTank Printer
+    </button>
 
-        </div>
+    <button
+      onClick={() => handleSelection("Epson EcoTank L3250")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Epson EcoTank L3250
+    </button>
+  </div>
+
+  {/* Column 2 */}
+  <div className="space-y-3.5">
+    <button
+      onClick={() => handleSelection("Brother DCP-B7535DW")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Brother DCP-B7535DW
+    </button>
+
+    <button
+      onClick={() => handleSelection("HP LaserJet Pro MFP M126nw")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      HP LaserJet Pro MFP M126nw
+    </button>
+
+    <button
+      onClick={() => handleSelection("Canon imageCLASS MF272dw")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Canon imageCLASS MF272dw
+    </button>
+  </div>
+
+  {/* Column 3 */}
+  <div className="space-y-3.5">
+    <button
+      onClick={() => handleSelection("Xerox B225 Multifunction Printer")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Xerox B225 Multifunction Printer
+    </button>
+
+    <button
+      onClick={() => handleSelection("Pantum M7102DW")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Pantum M7102DW
+    </button>
+
+    <button
+      onClick={() => handleSelection("Brother HL-L2440DW")}
+      className="text-[#006699] hover:underline font-medium block text-left"
+    >
+      Brother HL-L2440DW
+    </button>
+  </div>
+
+</div>
       </section>
 
       {/* 6. CORNER CHAT CAPSULE TAB SYSTEM */}

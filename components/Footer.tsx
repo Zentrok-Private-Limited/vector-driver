@@ -1,16 +1,23 @@
 import React from "react";
 
 export default function Footer() {
+
+   const openChat = () => {
+    if (typeof window !== "undefined" && window.jivo_api) {
+      window.jivo_api.open();
+    }
+  };
+
   return (
     <footer className="w-full bg-black text-white py-8 px-4 text-xs">
       <div className="max-w-285 mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center space-x-6">
           {/* Logo */}
           <div className="shrink-0">
-            <img src="/logo.png" alt="logo" className="h-6 w-6" />
+            <img src="/logo.png" alt="logo" className="h-15 w-45" />
           </div>
           <span className="text-gray-400 font-medium">
-            &copy; {new Date().getFullYear()} HP OFFICIAL SUPPORT
+            &copy; {new Date().getFullYear()} PRINTER ASSISTANCE
           </span>
         </div>
 
@@ -24,9 +31,9 @@ export default function Footer() {
           <a href="computer-support" className="hover:underline">
             COMPUTER SUPPORT
           </a>
-          <a href="#" className="text-[#1955B4] hover:underline">
+          <button onClick={openChat} className="text-[#1955B4] hover:underline">
             LIVE CHAT
-          </a>
+          </button>
         </div>
       </div>
     </footer>
