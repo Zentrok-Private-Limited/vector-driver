@@ -33,11 +33,11 @@ export default function Header() {
   return (
     <header className="w-full sticky top-0 z-50 bg-white border-b border-gray-200 font-subheading font-normal">
       {/* Brand Bar */}
-      <div className="w-full mx-auto px-8 h-20 flex items-center justify-between gap-6">
-        {/* Logo */}
+      <div className="w-full mx-auto px-8 h-20 flex items-center justify-center gap-6">
+        {/* Logo
         <div className="shrink-0 cursor-pointer" onClick={() => router.push("/")}>
           <img src="/logo.png" alt="logo" className="h-15 w-45" />
-        </div>
+        </div> */}
 
         {/* COMBINED SEARCH BAR + ASK BUTTON ROW */}
         <div ref={dropdownRef} className="flex-1 max-w-170 flex items-center gap-4 relative">
