@@ -18,6 +18,7 @@ import Footer from "@/components/Footer";
 export default function AccessoriesSetupPage() {
   const router = useRouter();
   const [inputValue, setInputValue] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false)
 
   const handleSearch = () => {
     if (inputValue.trim() !== "") {
@@ -28,6 +29,13 @@ export default function AccessoriesSetupPage() {
   };
   const handlePopularClick = (name: string) => {
     const urlSafeName = encodeURIComponent(name.trim().replace(/\s+/g, "-"));
+    router.push(`/download/${urlSafeName}`);
+  };
+
+   const handleSelection = (productName: string) => {
+    setInputValue(productName);
+    setShowDropdown(false);
+    const urlSafeName = encodeURIComponent(productName.trim().replace(/\s+/g, "-"));
     router.push(`/download/${urlSafeName}`);
   };
 
@@ -137,6 +145,12 @@ export default function AccessoriesSetupPage() {
                   type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleSelection(inputValue);
+                }
+              }}
                   placeholder="Enter your serial number, product number or product name"
                   className="w-full bg-white border border-gray-400 rounded-lg pl-5 pr-12 h-11 text-[16px] text-black tracking-wide focus:outline-none focus:border-gray-600 placeholder-gray-400"
                 />

@@ -141,6 +141,12 @@ export default function LaptopSetupPage() {
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleSelection(inputValue);
+                }
+              }}
                     placeholder="Enter your serial number, product number or product name"
                     className="w-full pr-10 text-[16px] text-black placeholder-gray-400 focus:outline-none font-subheading font-normal bg-transparent tracking-wide"
                   />

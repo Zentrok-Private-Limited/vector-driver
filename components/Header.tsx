@@ -48,6 +48,12 @@ export default function Header() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onFocus={() => query.trim().length > 0 && setShowDropdown(true)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleSelection(query);
+                }
+              }}
               placeholder="Search Driver Guides Enter a printer name..."
               className="w-full pr-10 text-base text-gray-800 placeholder-gray-400 focus:outline-none font-subheading font-normal bg-transparent"
             />
