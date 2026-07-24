@@ -255,14 +255,6 @@ export default function PrinterSetupPage() {
 </div>
       </section>
 
-      {/* 6. CORNER CHAT CAPSULE TAB SYSTEM */}
-      <div className="fixed bottom-0 right-6 z-50">
-        <div className="bg-[#3F0E9C] text-white px-5 py-3 rounded-t-md flex items-center space-x-3 cursor-pointer shadow-lg hover:bg-[#310A7A] transition-colors">
-          <span className="text-[14px] font-semibold font-heading">Leave a message</span>
-          <MessageSquare className="w-4 h-4 fill-white text-[#3F0E9C]" />
-        </div>
-      </div>
-
       {/* 7. BOTTOM STICKY GENERAL LEGAL INFRASTRUCTURE STRIP FOOTER */}
       <Footer />
 

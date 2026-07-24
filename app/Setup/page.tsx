@@ -13,7 +13,7 @@ export default function HPSupportHome() {
       {/* HERO TITLE CONTAINER */}
       <section className="text-center pt-10 pb-12 px-4 bg-white">
         <h1 className="text-[40px] font-medium text-black tracking-wide mb-2 font-heading">
-          Welcome to Printer Support
+          Welcome to Official Support
         </h1>
         <p className="text-gray-500 text-base tracking-wide font-subheading font-normal">
           How can we help?
