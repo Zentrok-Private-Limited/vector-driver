@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Search, ChevronRight, Printer, Laptop, Monitor, Headphones, MessageSquare } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { PRINTERS_DATA } from "@/data/printersData";
 
 export default function PrinterSetupPage() {
   const router = useRouter();
@@ -12,6 +13,35 @@ export default function PrinterSetupPage() {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown if clicked outside the container
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDropdown(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+    setActiveIndex(-1);
+
+    if (value.trim().length > 0) {
+      const filtered = PRINTERS_DATA.filter((item) =>
+        item.toLowerCase().includes(value.toLowerCase())
+      ).slice(0, 8); // Limits display view to top 8 items
+      setSuggestions(filtered);
+      setShowDropdown(true);
+    } else {
+      setSuggestions([]);
+      setShowDropdown(false);
+    }
+  };
 
 
   const handleSelection = (productName: string) => {
@@ -19,6 +49,32 @@ export default function PrinterSetupPage() {
     setShowDropdown(false);
     const urlSafeName = encodeURIComponent(productName.trim().replace(/\s+/g, "-"));
     router.push(`/download/${urlSafeName}`);
+  };
+
+   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!showDropdown) {
+      if (e.key === "Enter" && inputValue.trim() !== "") {
+        handleSelection(inputValue);
+      }
+      return;
+    }
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : prev));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIndex((prev) => (prev > 0 ? prev - 1 : prev));
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (activeIndex >= 0 && activeIndex < suggestions.length) {
+        handleSelection(suggestions[activeIndex]);
+      } else if (inputValue.trim() !== "") {
+        handleSelection(inputValue);
+      }
+    } else if (e.key === "Escape") {
+      setShowDropdown(false);
+    }
   };
 
   return (
@@ -111,19 +167,15 @@ export default function PrinterSetupPage() {
               </label>
               
               {/* Dropdown Container Context */}
-              <div className="relative max-w-xl">
+              <div ref={dropdownRef} className="relative max-w-xl">
                 <div className="relative flex items-center border border-gray-400 bg-white px-5 h-11 shadow-inner rounded-lg focus-within:border-[#007DBD] transition-colors">
                   <input
                     type="text"
                     value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Enter your serial number, product number or product name"
-                    onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  handleSelection(inputValue);
-                }
-              }}
+                     onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
+                    onFocus={() => inputValue.trim().length > 0 && setShowDropdown(true)}
+                    placeholder="Example: HP OfficeJet 4630"
                     className="w-full pr-10 text-[16px] text-black placeholder-gray-400 focus:outline-none font-subheading font-normal bg-transparent tracking-wide"
                   />
                   <button 

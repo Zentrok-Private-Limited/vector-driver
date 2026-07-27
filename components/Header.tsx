@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { PRINTERS_DATA } from "@/data/printersData";
 
-
 export default function Header() {
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -15,20 +14,76 @@ export default function Header() {
   const [activeIndex, setActiveIndex] = useState(-1);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Close dropdown if clicked outside the component container
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowDropdown(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Filter dynamic results list when typing occurs
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setQuery(value);
+    setActiveIndex(-1);
+
+    if (value.trim().length > 0) {
+      const filtered = PRINTERS_DATA.filter((item) =>
+        item.toLowerCase().includes(value.toLowerCase()),
+      ).slice(0, 8); // Limits UI display view to top 8 entries for scannability
+      setSuggestions(filtered);
+      setShowDropdown(true);
+    } else {
+      setSuggestions([]);
+      setShowDropdown(false);
+    }
+  };
+
   const handleSelection = (productName: string) => {
     setQuery(productName);
     setShowDropdown(false);
     // Standardizes alphanumeric parameters for web routing paths
-    const urlSafeName = encodeURIComponent(productName.trim().replace(/\s+/g, "-"));
+    const urlSafeName = encodeURIComponent(
+      productName.trim().replace(/\s+/g, "-"),
+    );
     router.push(`/download/${urlSafeName}`);
   };
 
-    const openChat = () => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!showDropdown) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIndex((prev) =>
+        prev < suggestions.length - 1 ? prev + 1 : prev,
+      );
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIndex((prev) => (prev > 0 ? prev - 1 : prev));
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (activeIndex >= 0 && activeIndex < suggestions.length) {
+        handleSelection(suggestions[activeIndex]);
+      } else if (query.trim() !== "") {
+        handleSelection(query);
+      }
+    } else if (e.key === "Escape") {
+      setShowDropdown(false);
+    }
+  };
+
+  const openChat = () => {
     if (typeof window !== "undefined" && window.jivo_api) {
       window.jivo_api.open();
     }
   };
-
 
   return (
     <header className="w-full sticky top-0 z-50 bg-white border-b border-gray-200 font-subheading font-normal">
@@ -40,36 +95,62 @@ export default function Header() {
         </div> */}
 
         {/* COMBINED SEARCH BAR + ASK BUTTON ROW */}
-        <div ref={dropdownRef} className="flex-1 max-w-170 flex items-center gap-4 relative">
+        <div
+          ref={dropdownRef}
+          className="flex-1 max-w-170 flex items-center gap-4 relative"
+        >
           {/* Input Box Wrapper */}
           <div className="relative flex-1 flex items-center border border-gray-400 bg-white px-4 h-11 shadow-sm rounded-sm focus-within:border-gray-600 transition-colors">
             <input
               type="text"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               onFocus={() => query.trim().length > 0 && setShowDropdown(true)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  handleSelection(query);
-                }
-              }}
               placeholder="Search Driver Guides Enter a printer name..."
               className="w-full pr-10 text-base text-gray-800 placeholder-gray-400 focus:outline-none font-subheading font-normal bg-transparent"
             />
-            <Search 
-              onClick={() => query.trim() !== "" && handleSelection(query)} 
-              className="absolute right-4 text-gray-500 w-5 h-5 cursor-pointer stroke-2 hover:text-black transition-colors" 
+            <Search
+              onClick={() => query.trim() !== "" && handleSelection(query)}
+              className="absolute right-4 text-gray-500 w-5 h-5 cursor-pointer stroke-2 hover:text-black transition-colors"
             />
           </div>
 
           {/* Connected Button */}
-          <button 
-            onClick={openChat}
+          <button
+            onClick={() => {
+              openChat();
+              if (query.trim()) {
+                handleSelection(query);
+              }
+            }}
             className="bg-[#111828] text-white px-7 h-11 text-base font-medium rounded-sm hover:bg-[#2C5EB0] transition-colors font-heading flex items-center justify-center shrink-0"
           >
             Ask Us
           </button>
+
+          {/* DYNAMIC AUTOCOMPLETE FLOATING SEARCH BOX */}
+          {showDropdown && suggestions.length > 0 && (
+            <div className="absolute top-11.5 left-0 w-full max-w-134 bg-white border border-gray-200 shadow-xl rounded-md overflow-hidden z-50 animate-in fade-in duration-100">
+              <ul className="py-1.5 max-h-80 overflow-y-auto">
+                {suggestions.map((item, index) => (
+                  <li
+                    key={item}
+                    onClick={() => handleSelection(item)}
+                    onMouseEnter={() => setActiveIndex(index)}
+                    className={`px-5 py-3 text-[15px] cursor-pointer flex items-center justify-between transition-colors ${
+                      index === activeIndex
+                        ? "bg-gray-100 text-blue-600 font-medium"
+                        : "text-gray-700"
+                    }`}
+                  >
+                    <span>{item}</span>
+                    <ArrowRight className="text-[8px] opacity-40 font-mono text-blue-600" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </header>
