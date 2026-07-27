@@ -9,87 +9,78 @@ export default function Footer() {
 
   return (
     <>
-      {/* Disclaimer */}
-<section className="bg-white px-4 py-12 border-t border-gray-200">
-  <div className="max-w-285 mx-auto">
-    <div className="relative rounded-2xl border border-gray-200 bg-white p-6 md:p-8 shadow-sm">
 
-      <h3 className="text-2xl font-bold text-gray-900 mb-5">
+      {/* Footer */}
+      {/* Footer */}
+<footer className="w-full bg-black text-white py-8 px-4 text-sm">
+  <div className="max-w-7xl mx-auto">
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
+
+      <h3 className="text-3xl font-bold mb-6">
         Disclaimer
       </h3>
 
-      <div className="space-y-5 text-[15px] leading-7 text-gray-600">
-        <p>
-          This website provides support and setup assistance for printer
-          devices. We are an independent service provider and are not affiliated
-          with, endorsed by, or connected to HP Inc. or any printer
-          manufacturer. All brand names, trademarks, and logos mentioned on
-          this website are the property of their respective owners.
-        </p>
+      <div className="space-y-6 text-gray-300 leading-7">
 
-        <p>
-          The information, drivers, and setup tools provided on this website are
-          offered for informational and technical support purposes only. While
-          we strive to ensure accuracy and reliability, we make no warranties or
-          representations regarding the completeness, accuracy, or suitability
-          of any content or software provided.
-        </p>
+      <div className="space-y-4 text-[15px] leading-7 text-gray-300">
+  <p>
+    <strong>Printer Drivers Support</strong> is an independent technical
+    support provider and is <strong>not affiliated with, endorsed by, or
+    sponsored by</strong> HP Inc. or any other printer manufacturer. All
+    trademarks, brand names, and logos are the property of their respective
+    owners.
+  </p>
 
-        <p>
-          Users are advised to verify compatibility with their specific printer
-          models before downloading any drivers or software. We are not
-          responsible for any issues that may arise from the use of information
-          or tools provided on this website. For official manufacturer support,
-          please visit the manufacturer's official website.
-        </p>
-
-        <p>
-          By using this website and its services, you acknowledge that you have
-          read, understood, and agreed to this disclaimer. If you do not agree
-          with these terms, please do not use this website or download any
-          materials from it.
-        </p>
+  <p>
+    The information and support provided on this website are for informational
+    purposes only. Users should verify compatibility before downloading or
+    installing any drivers or software. For official drivers, warranties, or
+    manufacturer support, please visit the official website of your printer's
+    manufacturer.
+  </p>
+</div>
+       
       </div>
-       {/* Badge */}
-      <div className="inline-flex items-center justify-center rounded-md bg-[#1955B4] px-8 py-2 mt-8">
-        <span className="text-sm font-light tracking-[0.25em] text-white uppercase">
+
+      {/* Badge */}
+      <div className="inline-flex items-center justify-center rounded-md bg-[#1955B4] px-8 py-3 mt-8">
+        <span className="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-white">
           Independent Guidance
         </span>
       </div>
+
     </div>
-    
   </div>
-</section>
 
-      {/* Footer */}
-      <footer className="w-full bg-black text-white py-8 px-4 text-xs">
-        <div className="max-w-285 mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center space-x-6">
-            <span className="text-gray-400 font-medium">
-              &copy; {new Date().getFullYear()} PRINTER ASSISTANCE
-            </span>
-          </div>
+  {/* Bottom Footer */}
+  <div className="max-w-7xl mx-auto mt-8 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-5">
 
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 font-semibold tracking-wide">
-            <a href="software-drivers" className="hover:underline">
-              SOFTWARE & DRIVERS
-            </a>
-            <a href="printer-support" className="hover:underline">
-              PRINTER SUPPORT
-            </a>
-            <a href="computer-support" className="hover:underline">
-              COMPUTER SUPPORT
-            </a>
+    <span className="text-gray-400 text-sm">
+      © {new Date().getFullYear()} PRINTER DRIVERS SUPPORT. All Rights Reserved.
+    </span>
 
-            <button
-              onClick={openChat}
-              className="text-[#1955B4] hover:underline"
-            >
-              LIVE CHAT
-            </button>
-          </div>
-        </div>
-      </footer>
+    <div className="flex flex-wrap justify-center gap-6 font-medium text-sm">
+      <a href="software-drivers" className="hover:text-white transition">
+        SOFTWARE & DRIVERS
+      </a>
+
+      <a href="printer-support" className="hover:text-white transition">
+        PRINTER SUPPORT
+      </a>
+
+      <a href="computer-support" className="hover:text-white transition">
+        COMPUTER SUPPORT
+      </a>
+
+      <button
+        onClick={openChat}
+        className="text-[#1955B4] hover:text-[#4f86df] transition"
+      >
+        LIVE CHAT
+      </button>
+    </div>
+  </div>
+</footer>
     </>
   );
 }
