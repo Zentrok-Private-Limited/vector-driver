@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
          <Script
-          src="//code.jivosite.com/widget/XTs1LY3ZMo" 
+          src="//code.jivosite.com/widget/VQtMS59ITc" 
           strategy="afterInteractive"
         />
         {children}
